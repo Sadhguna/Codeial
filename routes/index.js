@@ -8,4 +8,4 @@ router.get('/',homeController.home);
 
 router.use('/users',require('./users'));
 //console.log("router accessed");
-module.exports=router;
+module.exports=router;  
