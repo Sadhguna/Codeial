@@ -1,12 +1,13 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
+const e = require('express');
 
 
 passport.use(new LocalStrategy({
     usernameField : 'mail'},
     function(mail,password,done){
-        console.log('hii');
+        //console.log('hii');
         User.findOne({mail : mail}).then((user)=>{
             if(!user || (password != user.password)){
                 console.log("Invalid username/password");
@@ -33,6 +34,22 @@ passport.use(new LocalStrategy({
             console.log("error in finding the user---->passport");
             return done(err);
         });
-    })
+    });
       //console.log("hiii");
+
+    passport.checkAuthentication = function(req,res,next){
+        //console.log(req.isAuthenticated());
+        if(req.isAuthenticated()){
+            //console.log("authentication");
+            return next();
+        }
+        return res.redirect('signin');
+    }
+
+    passport.setAuthenticatedUser = function(req,res,next){
+        if(req.isAuthenticated()){
+            res.locals.user = req.user;
+        }
+        return next();
+    }
     module.exports = passport;

@@ -1,16 +1,22 @@
 const User = require('../models/user');
 
 module.exports.profile = function(req,res){
-    return res.end("<h1>Users Profile</h1>");
+    return res.render('user_profile');
 }
 
 module.exports.signUp = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('profile');
+    }
     return res.render('user_sign_up',{
         title : "Codeial | Sign Up"
     })
 }
 
 module.exports.signIn = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('profile');
+    }
     return res.render('user_sign_in',{
         title : "Codeial | Sign In"
     })
@@ -59,7 +65,7 @@ module.exports.create = function(req,res){
                 //confirm_password : req.body.confirm_password,
                 name : req.body.name
             });
-            return res.render('user_sign_in');
+            return res.redirect('signin');
         }
     }).catch((err)=>{
         console.log("error in signing up",err);
@@ -95,6 +101,7 @@ module.exports.create = function(req,res){
 
 
 module.exports.create_session = function(req,res){
-    console.log(req.body);
-    return res.end('<h1>pavan</h1>');
+    // console.log(req.body);
+    // return res.end('<h1>pavan</h1>');
+    return res.redirect('profile');
 }
