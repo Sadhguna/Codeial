@@ -103,5 +103,15 @@ module.exports.create = function(req,res){
 module.exports.create_session = function(req,res){
     // console.log(req.body);
     // return res.end('<h1>pavan</h1>');
-    return res.redirect('profile');
+    return res.redirect('/');
+}
+
+module.exports.destroySession = function(req,res){
+    req.logout(function(err) {
+        if(err) {
+             return next(err);
+        }
+    }
+    );
+    return res.redirect('/');
 }

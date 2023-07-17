@@ -7,6 +7,7 @@ const Usercontroller = require('../controllers/users_controller');
 router.get('/profile',passport.checkAuthentication,Usercontroller.profile);
 router.get('/signup',Usercontroller.signUp);
 router.get('/signin',Usercontroller.signIn);
+router.get('/signout',Usercontroller.destroySession);
 
 
 router.post('/create',Usercontroller.create);
