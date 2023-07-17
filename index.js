@@ -9,7 +9,7 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 
-const MongoStore = require('connect-mongo');
+const MongoStore =new require('connect-mongo');
 
 app.use(express.urlencoded());
 app.use(cookieParser());

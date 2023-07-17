@@ -23,7 +23,7 @@ module.exports.signIn = function(req,res){
 }
 
 module.exports.create = function(req,res){
-      console.log(req.body);
+     // console.log(req.body);
     // // return res.end('<h1>pavan</h1>');
     // //console.log(req.body);
     // console.log(req.body.password);
@@ -55,7 +55,7 @@ module.exports.create = function(req,res){
     // }
     ).then((data)=>{
         if(data){
-            console.log(data);
+            //console.log(data);
             return res.end("mail already exists");
             }
         if(!data){
@@ -109,9 +109,12 @@ module.exports.create_session = function(req,res){
 module.exports.destroySession = function(req,res){
     req.logout(function(err) {
         if(err) {
+           // console.log("pavanerror");
              return next(err);
+        }else{
+            return res.redirect('/');
         }
     }
     );
-    return res.redirect('/');
+   // return res.redirect('/');
 }
