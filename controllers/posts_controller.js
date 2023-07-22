@@ -1,4 +1,4 @@
-const { content } = require('har-validator');
+//const { content } = require('har-validator');
 const Post = require('../models/posts');
 
 module.exports.create = function(req,res){
