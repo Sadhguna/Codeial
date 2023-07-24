@@ -1,4 +1,5 @@
 const Post = require('../models/posts');
+const User = require('../models/user');
 
 module.exports.home = function(req,res){
     //return res.end('<h1> Express is up for Codeial!</h1>');
@@ -14,12 +15,15 @@ Post.find()
     }
 })
 .exec().then((posts)=>{
-    return res.render('home',{
-        title : 'Codeial | home',
-        posts : posts
+    User.find().then((users)=>{
+        return res.render('home',{
+            title : 'Codeial | home',
+            posts : posts,
+            all_users : users
+        })  
     })
 }).catch((err)=>{
-    console.log("error in finding posts");
+    console.log("error in finding posts",err);
 })
 
 }
