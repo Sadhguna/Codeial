@@ -1,29 +1,29 @@
 const Post = require('../models/posts');
 const User = require('../models/user');
 
-module.exports.home = function(req,res){
+module.exports.home = async function(req,res){
     //return res.end('<h1> Express is up for Codeial!</h1>');
     //console.log(req.cookies);
     //res.cookie('user_id',50);
-   
-Post.find()
-.populate('user')
-.populate({
-    path : 'comments',
-    populate : {
+    try{
+        let posts = await Post.find({})
+        .populate('user')
+        .populate({
+        path : 'comments',
+        populate : {
         path : 'user'
-    }
-})
-.exec().then((posts)=>{
-    User.find().then((users)=>{
+        }
+    });
+
+    let users = await User.find();
         return res.render('home',{
             title : 'Codeial | home',
             posts : posts,
             all_users : users
-        })  
-    })
-}).catch((err)=>{
-    console.log("error in finding posts",err);
-})
+    });
+    }catch(err){
+        console.log("error",err);
+        return;
+    }
 
 }
