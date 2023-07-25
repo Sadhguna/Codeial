@@ -123,6 +123,7 @@ module.exports.create = function(req,res){
 module.exports.create_session = function(req,res){
     // console.log(req.body);
     // return res.end('<h1>pavan</h1>');
+    req.flash('success','logged in successfully');
     return res.redirect('/');
 }
 
@@ -132,6 +133,7 @@ module.exports.destroySession = function(req,res){
            // console.log("pavanerror");
              return next(err);
         }else{
+            req.flash('success','You have logged out!');
             return res.redirect('/');
         }
     }
