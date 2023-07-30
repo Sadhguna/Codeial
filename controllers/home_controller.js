@@ -8,6 +8,7 @@ module.exports.home = async function(req,res){
     try{
         //await indicates that until the completion of post.find() it should wait and proceed to next step
         let posts = await Post.find({})
+        .sort('-createdAt')
         .populate('user')
         .populate({
         path : 'comments',
