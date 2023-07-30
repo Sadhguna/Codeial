@@ -11,19 +11,43 @@ module.exports.profile = function(req,res){
     })
 }
 
-module.exports.update = function(req,res){
-    if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body).then((user)=>{
-            req.flash('success','Updated');
-            return res.redirect('back');
-        }).catch((err)=>{
+module.exports.update =async function(req,res){
+     if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id,req.body).then((user)=>{
+    //         req.flash('success','Updated');
+    //         return res.redirect('back');
+    //     }).catch((err)=>{
             
-            console.log("error in updating",err);
+    //         console.log("error in updating",err);
            
-        })
+    //     })
         //return res.redirect('back');
+        try{
+            let user = await User.findById(req.params.id);
+            //console.log(user);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){
+                    console.log('******Multer Error',err);
+                }
+                //console.log(req.file);
+                user.name = req.body.name;
+                user.mail = req.body.mail;
+                //console.log(req.file);
+                if(req.file){
+                    //this is saving the path of the uploaded file into the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                return res.redirect('back');
+            });
+        }catch(err){
+            req.flash('error',err);
+           // console.log("hiii1`");
+            return res.redirect('back');
+        }
     }else{
         req.flash('error','Unauthorized');
+        //console.log("hii");
         return res.status(401).send('Unauthorized');
     }
 }
