@@ -14,12 +14,16 @@ module.exports.profile = function(req,res){
 module.exports.update = function(req,res){
     if(req.user.id == req.params.id){
         User.findByIdAndUpdate(req.params.id,req.body).then((user)=>{
+            req.flash('success','Updated');
             return res.redirect('back');
         }).catch((err)=>{
+            
             console.log("error in updating",err);
+           
         })
         //return res.redirect('back');
     }else{
+        req.flash('error','Unauthorized');
         return res.status(401).send('Unauthorized');
     }
 }
@@ -50,7 +54,8 @@ module.exports.create = function(req,res){
     // console.log(req.body.confirm_password);
      if(req.body.password !== req.body.confirm_password){
     //    // return res.render('user_sign_in');
-        return  res.end("password mismatch");
+    req.flash('error', 'Passwords do not match');
+        return  res.redirect('back');
     //    // return res.redirect('back');
      }
     User.findOne({mail : req.body.mail}
@@ -88,7 +93,8 @@ module.exports.create = function(req,res){
             return res.redirect('signin');
         }
     }).catch((err)=>{
-        console.log("error in signing up",err);
+        req.flash('error', err); 
+        return
     })
     // .then((data)=>{
     //   //  console.log(data);
