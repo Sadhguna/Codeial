@@ -61,8 +61,10 @@ module.exports.create = async function(req,res){
 
 module.exports.destroy = async function(req,res){
     try{
-        let comment =await Comment.findById(req.params.id);
-    if(comment.user == req.user.id){
+        let comment =await Comment.findById(req.params.id).populate('post','user');
+       // console.log(comment.post.user);
+    if(comment.user == req.user.id || comment.post.user == req.user.id){
+        //console.log("%%%%%%%%%%%%%");
         let postId = comment.post;
         await Comment.findByIdAndDelete(req.params.id);
         let post = await Post.findByIdAndUpdate(postId, {$pull : {comments : req.params.id}});
@@ -81,6 +83,7 @@ module.exports.destroy = async function(req,res){
 
         res.redirect('back');
     }else{
+        //console.log("&&&&&&&&&&&&&&&&&&&&&");
         req.flash('error', 'Unauthorized!');
         return res.redirect('back');
     }
