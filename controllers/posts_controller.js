@@ -1,6 +1,7 @@
 //const { content } = require('har-validator');
 const Post = require('../models/posts');
 const Comment = require('../models/comments');
+const Like = require('../models/like');
 
 module.exports.create = async function(req,res){
     try{
@@ -36,6 +37,12 @@ module.exports.destroy = async function(req,res){
         // so there is no need to write _id
         if(post.user == req.user.id){
             //let id = req.params.id;
+
+            // delete the associated likes for the post and all its comments likes too
+            await Like.deleteMany({likeable : post, onModel : 'Post'});
+            await Like.deleteMany({_id : {$in : post.comments}});
+
+
             await Post.findByIdAndDelete(req.params.id);
             await Comment.deleteMany({post:req.params.id});
             
