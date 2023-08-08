@@ -36,14 +36,14 @@ module.exports.create = async function(req,res){
 
 
     comment = await comment.populate('user', 'name mail');
-    //commentsMailer.newComment(comment);
-    let job = queue.create('emails',comment).save(function(err){
-        if(err){
-            console.log("error in creating a queue",err);
-            return;
-        }
-        console.log(job.id);
-    })
+    commentsMailer.newComment(comment);
+    // let job = queue.create('emails',comment).save(function(err){
+    //     if(err){
+    //         console.log("error in creating a queue",err);
+    //         return;
+    //     }
+    //     console.log(job.id);
+    // })
     if (req.xhr){
         // Similar for comments to fetch the user's id!
 
