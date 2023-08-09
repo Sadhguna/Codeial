@@ -1,12 +1,13 @@
 const Like = require("../models/like");
-const Post =  require("../models/post");
-const Comment = require('../models/comment');
+const Post =  require("../models/posts");
+const Comment = require('../models/comments');
 
 
 module.exports.toggleLike = async function(req, res){
     try{
 
         // likes/toggle/?id=abcdef&type=Post
+        //console.log("hiiiiiiii");
         let likeable;
         let deleted = false;
 
@@ -30,7 +31,8 @@ module.exports.toggleLike = async function(req, res){
             likeable.likes.pull(existingLike._id);
             likeable.save();
 
-            existingLike.remove();
+            await Like.deleteOne(existingLike); 
+            //existingLike.remove();
             deleted = true;
 
         }else{
