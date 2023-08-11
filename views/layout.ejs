@@ -10,6 +10,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
         <link rel="stylesheet" href="/css/layout.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
         <!-- <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/footer.css"> -->
         <%- style %>
@@ -26,7 +28,10 @@
         <main id="layout-main">
             <%- body %>
         </main>
-        <%- include('_footer'); %>
+        <footer id="footer">
+            <%- include('_footer'); %>
+        </footer>
+        
         <%- script %>   
         <script>
              <%if(flash.success && flash.success.length > 0){ %>
