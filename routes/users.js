@@ -30,4 +30,6 @@ router.get('/resetPassword/:token',Usercontroller.create_password);
 
 router.post('/resetPassword/password_reset/:token',Usercontroller.passwordReset);
 
+router.get('/friends/:id',Usercontroller.friends);
+
 module.exports = router;

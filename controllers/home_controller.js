@@ -1,5 +1,6 @@
 const Post = require('../models/posts');
 const User = require('../models/user');
+
 // async indicates that there are asynchronous functions inside the function
 module.exports.home = async function(req,res){
     //return res.end('<h1> Express is up for Codeial!</h1>');
@@ -18,9 +19,11 @@ module.exports.home = async function(req,res){
         populate : {
             path : 'likes'
         }
-        }).populate('likes');
+        })
+        .populate('likes');
 
-    let users = await User.find({});
+
+    let users = await User.find({}).populate({ path : 'friendships', populate : { path : 'to_user'}});
         return res.render('home',{
             title : 'Codeial | home',
             posts : posts,

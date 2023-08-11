@@ -14,9 +14,21 @@
                 <input type="file" name="avatar" placeholder="Profile Picture">
                 <input type="submit" value="update">
             </form>
+            
         <%}else{%>
             <p><%= profile_user.name%></p>
             <p><%= profile_user.mail%></p>
+            <br>
+            <% let a = true %>
+            <%for(u of profile_user.friendships){%>
+                <%if(u.to_user == locals.user.id){%>
+                    <a href="/users/friends/<%=profile_user._id%>" >Remove Friend</a>
+                    <%  a = false %>
+                <%}%>                    
+            <%}%>  
+            <%if(a){%>
+                <a href="/users/friends/<%=profile_user._id%>" >Add Friend</a>       
+            <%}%>
         <%}%>
     </body>
 </html>

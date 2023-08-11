@@ -22,14 +22,30 @@
                 <%}%>
                 <div id="posts-list-container">
                     <ul>
+                        
                         <% for(post of posts){%>
+                            
                             <%- include('_post') -%>
                         <%}%>
                     </ul>
                 </div>
             </section>
+            <% if(locals.user){ %>
+                <section id="friends">
+                    <h4>Friends</h4>
+                    <% for(users of all_users){ %>
+                        <%if( users.id == locals.user.id){%>
+                            <%for(u of users.friendships){%>
+                                <ul>
+                                    <li><%=u.to_user.name%></li>
+                                </ul>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                </section>
+            <%}%>
            <section id="user-friends">
-            <h4> Friends </h4>
+            <h4> Users </h4>
             <% for(u of all_users){%>
                 <p>
                     <a href="/users/profile/<%=u.id%>"><%= u.name%></a>
