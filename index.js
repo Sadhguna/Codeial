@@ -1,4 +1,5 @@
 const express = require('express');
+const environment = require('./config/environment');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
@@ -15,15 +16,19 @@ const passportGoogle = require('./config/passport-google-oauth2-strategy');
 
 const MongoStore =require('connect-mongo');
 
+const path = require('path');
+
 const sassMiddleware = require('node-sass-middleware');
-app.use(sassMiddleware({
-    
-    src : './assets/scss',
-    dest : './assets/css',
+
+if(env.name=='development'){
+app.use(sassMiddleware({ 
+    src : path.join(__dirname,environment.asset_path, 'scss'),
+    dest : path.join(__dirname,environment.asset_path, 'css'),
     debug : true,
     outputStyle : 'extended',
     prefix : '/css'
 }));
+}
 
 const flash = require('connect-flash');
 
@@ -40,7 +45,7 @@ console.log("chat server is listening on port 5000");
 app.use(express.urlencoded());
 app.use(cookieParser());
 
-app.use(express.static('./assets'));
+app.use(express.static(environment.asset_path));
 //makes the uploads path available to the browser
 app.use('/uploads',express.static(__dirname + '/uploads'));
 
@@ -60,7 +65,7 @@ app.set('views' , './views');
 //sessional cookie
 app.use(session({
     name : 'codeial',
-    secret : 'blahsomething',
+    secret : environment.session_cookie_key,
     saveUninitialized : false,
     resave : false,
     cookie : {

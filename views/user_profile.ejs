@@ -22,12 +22,12 @@
             <% let a = true %>
             <%for(u of profile_user.friendships){%>
                 <%if(u.to_user == locals.user.id){%>
-                    <a href="/users/friends/<%=profile_user._id%>" >Remove Friend</a>
+                    <a href="/friends/<%=profile_user._id%>" >Remove Friend</a>
                     <%  a = false %>
                 <%}%>                    
             <%}%>  
             <%if(a){%>
-                <a href="/users/friends/<%=profile_user._id%>" >Add Friend</a>       
+                <a href="/friends/<%=profile_user._id%>" >Add Friend</a>       
             <%}%>
         <%}%>
     </body>
