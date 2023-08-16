@@ -1,7 +1,9 @@
 const express = require('express');
 const environment = require('./config/environment');
+const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const app = express();
+require('./config/view-helpers')(app);
 const port = 8000;
 
 const expressLayouts = require('express-ejs-layouts');
@@ -20,7 +22,7 @@ const path = require('path');
 
 const sassMiddleware = require('node-sass-middleware');
 
-if(env.name=='development'){
+if(environment.name=='development'){
 app.use(sassMiddleware({ 
     src : path.join(__dirname,environment.asset_path, 'scss'),
     dest : path.join(__dirname,environment.asset_path, 'css'),
@@ -48,6 +50,8 @@ app.use(cookieParser());
 app.use(express.static(environment.asset_path));
 //makes the uploads path available to the browser
 app.use('/uploads',express.static(__dirname + '/uploads'));
+
+app.use(logger(environment.morgan.mode, environment.morgan.options));
 
 app.use(expressLayouts);
 // extract style and scripts from sub pages into the layout
