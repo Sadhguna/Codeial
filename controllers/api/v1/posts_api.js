@@ -1,8 +1,9 @@
-const Post = require('../../../models/posts');
-const Comment = require('../../../models/comments');
+import Post from '../../../models/posts.js';
+import Comment from '../../../models/comments.js';
 
-module.exports.index =async function(req,res){
-
+export default {
+    index : async function(req,res){
+try{
     let posts = await Post.find({})
         .sort('-createdAt')
         .populate('user')
@@ -16,10 +17,17 @@ module.exports.index =async function(req,res){
         message : "List of posts",
         posts : posts
     })
+}catch(err){
+    console.log("*********error",err);
+        return res.json(500,{
+            message : "Internal Server Error"
+        });
 }
 
+},
 
-module.exports.destroy = async function(req,res){
+
+destroy : async function(req,res){
     try{
         let post = await Post.findById(req.params.id);
         // .id means converting the object id into string
@@ -59,4 +67,5 @@ module.exports.destroy = async function(req,res){
         //req.flash('error',err);
         //return res.redirect('back');
     }
+}
 }

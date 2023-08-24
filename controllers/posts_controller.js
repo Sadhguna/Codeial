@@ -1,9 +1,9 @@
 //const { content } = require('har-validator');
-const Post = require('../models/posts');
-const Comment = require('../models/comments');
-const Like = require('../models/like');
+import Post from '../models/posts.js';
+import Comment from '../models/comments.js';
+import Like from '../models/like.js';
 
-module.exports.create = async function(req,res){
+export async function create(req,res){
     try{
         let post =await Post.create({
             content : req.body.content,
@@ -30,7 +30,7 @@ module.exports.create = async function(req,res){
     }
 }
 
-module.exports.destroy = async function(req,res){
+export async function destroy(req,res){
     try{
         let post = await Post.findById(req.params.id);
         // .id means converting the object id into string

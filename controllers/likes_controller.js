@@ -1,9 +1,9 @@
-const Like = require("../models/like");
-const Post =  require("../models/posts");
-const Comment = require('../models/comments');
+import Like from "../models/like.js";
+import Post from "../models/posts.js";
+import Comment from '../models/comments.js';
 
 
-module.exports.toggleLike = async function(req, res){
+export async function toggleLike(req, res){
     try{
 
         // likes/toggle/?id=abcdef&type=Post

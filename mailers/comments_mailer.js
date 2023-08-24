@@ -1,8 +1,8 @@
-const nodeMailer = require('../config/nodemailer');
+import nodeMailer from '../config/nodemailer.js';
 
 
 // this is another way of exporting a method
-exports.newComment = (comment) => {
+export default function newComment(comment) {
     //console.log("inside newComment mailer");
 
     let htmlString = nodeMailer.renderTemplate({comment : comment},'comments/new_comment.ejs');

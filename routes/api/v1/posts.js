@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
+import { Router } from 'express';
+const router = Router();
+import passport from 'passport';
 
-const postsApi = require('../../../controllers/api/v1/posts_api');
+import postApi from '../../../controllers/api/v1/posts_api.js';
 
-router.get('/', postsApi.index);
-router.delete('/:id',passport.authenticate('jwt',{session : false}),postsApi.destroy);
+router.get('/', postApi.index);
+router.delete('/:id',passport.authenticate('jwt',{session : false}),postApi.destroy);
 
-module.exports=router;  
+export default router;  

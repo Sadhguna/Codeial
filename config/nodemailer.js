@@ -1,14 +1,20 @@
-const nodemailer = require('nodemailer');
-const ejs = require('ejs');
-const path = require('path');
-const environment = require('./environment');
+import nodemailer from 'nodemailer';
+import ejs from 'ejs';
+import { join } from 'path';
+import environment from './environment.js';
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let transporter = nodemailer.createTransport(environment.smtp);
 
 let renderTemplate = (data, relativePath) => {
     let mailHTML;
     ejs.renderFile(
-        path.join(__dirname,'../views/mailers',relativePath),
+        join(__dirname,'../views/mailers',relativePath),
         data,
         function(err, template){
             if(err){
@@ -21,7 +27,7 @@ let renderTemplate = (data, relativePath) => {
     return mailHTML;
 }
 
-module.exports = {
-    renderTemplate : renderTemplate,
-    transporter : transporter
+export default {
+    transporter: transporter,
+    renderTemplate: renderTemplate
 }

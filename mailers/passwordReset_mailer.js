@@ -1,7 +1,9 @@
-const nodeMailer = require('../config/nodemailer');
-const User = require('../models/user');
+import nodeMailer from '../config/nodemailer.js';
+import User from '../models/user.js';
 
-exports.newPassword = (data)=>{
+export default {
+
+    newPassword : function(data){
     //let mail;
     //let link = "http://localhost:8000/users/resetPassword/?token=data.token";
     let htmlString = nodeMailer.renderTemplate({data : data},'password_reset/password_reset.ejs');
@@ -27,4 +29,5 @@ exports.newPassword = (data)=>{
     });
     //console.log(mail);
     
+}
 }

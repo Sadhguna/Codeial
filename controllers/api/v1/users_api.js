@@ -1,9 +1,9 @@
-const User = require('../../../models/user');
-const jwt = require('jsonwebtoken');
-const environment = require('../../../config/environment');
+import User from '../../../models/user.js';
+import jwt from 'jsonwebtoken';
+import environment from '../../../config/environment.js';
 
 
-module.exports.create_session =async function(req,res){
+export default async function create_session(req,res){
     
 
     try{

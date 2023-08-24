@@ -1,10 +1,10 @@
-const User = require('../models/user');
-const Friends = require('../models/friendship');
+import User from '../models/user.js';
+import Friends from '../models/friendship.js';
 
 
-module.exports.friends = async function(req, res){
-    // console.log(req.params.id);
-    // console.log(req.user.id);
+export async function friends(req, res){
+     console.log(req.params.id);
+     console.log(req.user.name);
     let friend1,friend2;
     let fr1 = await Friends.findOne({from_user : req.user._id,to_user : req.params.id});
     let fr2 = await Friends.findOne({from_user : req.params.id, to_user : req.user._id});

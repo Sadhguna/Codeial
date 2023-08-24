@@ -1,8 +1,8 @@
-const queue = require('../config/kue');
+import queue from '../config/kue.js';
 
-const commentsMailer = require('../mailers/comments_mailer');
+import commentsMailer from '../mailers/comments_mailer.js';
 
-queue.process('emails',function(job,done){
+export default queue.process('emails',function(job,done){
     console.log('emails worker is processing a job',job.data);
     commentsMailer.newComment(job.data);
     done();

@@ -1,10 +1,10 @@
-const express = require('express');
+import { Router } from 'express';
 
-const router = express.Router();
-const likesController = require('../controllers/likes_controller');
-
-
-router.post('/toggle', likesController.toggleLike);
+const router = Router();
+import { toggleLike } from '../controllers/likes_controller.js';
 
 
-module.exports = router;
+router.post('/toggle', toggleLike);
+
+
+export default router;

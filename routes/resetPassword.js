@@ -1,14 +1,14 @@
-const express = require('express');
-const passport = require('passport');
-const router = express.Router();
+import { Router } from 'express';
+import passport from 'passport';
+const router = Router();
 
 
-const passwordController = require('../controllers/resetPassword_controller');
+import { resetPasswordMail, resetPassword, create_password, passwordReset } from '../controllers/resetPassword_controller.js';
 
-router.get('/reset-password-mail',passwordController.resetPasswordMail);
-router.post('/reset-password',passwordController.resetPassword);
+router.get('/reset-password-mail',resetPasswordMail);
+router.post('/reset-password',resetPassword);
 
-router.get('/resetPassword/:token',passwordController.create_password);
+router.get('/resetPassword/:token',create_password);
 
-router.post('/password_reset/:token',passwordController.passwordReset);
-module.exports = router;
+router.post('/password_reset/:token',passwordReset);
+export default router;

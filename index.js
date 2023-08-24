@@ -1,46 +1,56 @@
-const express = require('express');
-const environment = require('./config/environment');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
+import express from 'express';
+import environment from './config/environment.js';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
 const app = express();
-require('./config/view-helpers')(app);
+import configureViewHelpers from './config/view-helpers.js';
+configureViewHelpers(app);
 const port = 8000;
 
-const expressLayouts = require('express-ejs-layouts');
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const db = require('./config/mongoose');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const session = require('express-session');
-const passport = require('passport');
-const passportLocal = require('./config/passport-local-strategy');
-const PassportJWT = require('./config/passport-jwt-strategy');
-const passportGoogle = require('./config/passport-google-oauth2-strategy');
+import expressLayouts from 'express-ejs-layouts';
 
-const MongoStore =require('connect-mongo');
+import db from './config/mongoose.js';
 
-const path = require('path');
+import session from 'express-session';
+import passport from 'passport';
+import passportLocal from './config/passport-local-strategy.js';
+import PassportJWT from './config/passport-jwt-strategy.js';
+import passportGoogle from './config/passport-google-oauth2-strategy.js';
 
-const sassMiddleware = require('node-sass-middleware');
+import MongoStore from 'connect-mongo';
+
+import { join } from 'path';
+
+import sassMiddleware from 'node-sass-middleware';
 
 if(environment.name=='development'){
 app.use(sassMiddleware({ 
-    src : path.join(__dirname,environment.asset_path, 'scss'),
-    dest : path.join(__dirname,environment.asset_path, 'css'),
+    src : join(__dirname,environment.asset_path, 'scss'),
+    dest : join(__dirname,environment.asset_path, 'css'),
     debug : true,
     outputStyle : 'extended',
     prefix : '/css'
 }));
 }
 
-const flash = require('connect-flash');
+import flash from 'connect-flash';
 
-const customMware = require('./config/middleware');
+import setFlash from './config/middleware.js';
+
+import http from 'http';
+import { chatSockets } from './config/chat_sockets.js';
 
 
+const server = http.createServer(app);
+const io = chatSockets(server);
 //setup the char server to be used with socket.io
-const chatServer = require('http').Server(app);
-const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
-chatServer.listen(5000);
+server.listen(5000);
 
 console.log("chat server is listening on port 5000");
 
@@ -89,9 +99,11 @@ app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 
 app.use(flash());
-app.use(customMware.setFlash);
+app.use(setFlash);
 
-app.use('/',require('./routes'));
+import routes from './routes/index.js';
+
+app.use('/',routes);
 
 app.listen(port, function(err){
     if(err){

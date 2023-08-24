@@ -1,6 +1,6 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/user');
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import User from '../models/user.js';
 //const e = require('express');
 
 
@@ -56,4 +56,4 @@ passport.use(new LocalStrategy({
         }
         return next();
     }
-    module.exports = passport;
+    export default passport;

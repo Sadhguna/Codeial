@@ -1,9 +1,13 @@
-const User = require('../models/user');
-const fs = require('fs');
-const path = require('path');
+import User from '../models/user.js';
+import fs from 'fs';
+import { join } from 'path';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-module.exports.profile = function(req,res){
+export function profile(req,res){
     // let login_user = User.findById(req.user.id);
     // console.log(login_user.name);
     User.findById(req.params.id).populate({path : 'friendships',populate :{ path : 'to_user', path : 'from_user'}}).then((user)=>{
@@ -17,7 +21,7 @@ module.exports.profile = function(req,res){
     })
 }
 
-module.exports.update =async function(req,res){
+export async function update(req,res){
      if(req.user.id == req.params.id){
     //     User.findByIdAndUpdate(req.params.id,req.body).then((user)=>{
     //         req.flash('success','Updated');
@@ -41,7 +45,7 @@ module.exports.update =async function(req,res){
                 //console.log(req.file);
                 if(req.file){
                     if(user.avatar){
-                        fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+                        fs.unlinkSync(join(__dirname,'..',user.avatar));
                     }
                     //this is saving the path of the uploaded file into the avatar field in the user
                     user.avatar = User.avatarPath + '/' + req.file.filename;
@@ -61,7 +65,7 @@ module.exports.update =async function(req,res){
     }
 }
 
-module.exports.signUp = function(req,res){
+export function signUp(req,res){
     if(req.isAuthenticated()){
         return res.redirect('profile');
     }
@@ -70,7 +74,7 @@ module.exports.signUp = function(req,res){
     })
 }
 
-module.exports.signIn = function(req,res){
+export function signIn(req,res){
     if(req.isAuthenticated()){
         return res.redirect('profile');
     }
@@ -79,7 +83,7 @@ module.exports.signIn = function(req,res){
     })
 }
 
-module.exports.create = function(req,res){
+export function create(req,res){
      // console.log(req.body);
     // // return res.end('<h1>pavan</h1>');
     // //console.log(req.body);
@@ -116,7 +120,7 @@ module.exports.create = function(req,res){
             //console.log(data);
             return res.end("mail already exists");
             }
-        if(!data){
+        else if(!data){
             User.create({
                 mail : req.body.mail,
                 password : req.body.password,
@@ -124,6 +128,9 @@ module.exports.create = function(req,res){
                 name : req.body.name
             });
             return res.redirect('signin');
+        }else{
+            req.flash('success', 'You have signed up, login to continue!');
+            return res.redirect('back');
         }
     }).catch((err)=>{
         req.flash('error', err); 
@@ -159,14 +166,14 @@ module.exports.create = function(req,res){
 }
 
 
-module.exports.create_session = function(req,res){
+export function create_session(req,res){
     // console.log(req.body);
     // return res.end('<h1>pavan</h1>');
     req.flash('success','logged in successfully');
     return res.redirect('/');
 }
 
-module.exports.destroySession = function(req,res){
+export function destroySession(req,res){
     req.logout(function(err) {
         if(err) {
            // console.log("pavanerror");

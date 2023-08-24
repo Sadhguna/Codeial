@@ -1,9 +1,9 @@
-const Comment = require('../models/comments');
-const Post = require('../models/posts');
-const commentsMailer = require('../mailers/comments_mailer');
-const commentEmailWorker = require('../workers/comment_email_workers');
-const queue = require('../config/kue');
-const Like = require('../models/like');
+import Comment from '../models/comments.js';
+import Post from '../models/posts.js';
+import commentsMailer from '../mailers/comments_mailer.js';
+import commentEmailWorker from '../workers/comment_email_workers.js';
+import queue from '../config/kue.js';
+import Like from '../models/like.js';
 // module.exports.create = async function(req,res){
 //     Post.findById(req.body.post).then((post)=>{
 //         Comment.create({
@@ -23,7 +23,7 @@ const Like = require('../models/like');
 //         console.log("error in adding comment to database2",err);
 //     });
 // }
-module.exports.create = async function(req,res){
+export async function create(req,res){
     try{
         let post = await Post.findById(req.body.post);
         if(post){
@@ -68,7 +68,7 @@ module.exports.create = async function(req,res){
 
 // this is using async-await
 
-module.exports.destroy = async function(req,res){
+export async function destroy(req,res){
     try{
         let comment =await Comment.findById(req.params.id).populate('post','user');
        // console.log(comment.post.user);

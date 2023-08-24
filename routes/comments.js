@@ -1,10 +1,10 @@
-const express = require('express');
-const passport = require('passport');
-const router = express.Router();
+import { Router } from 'express';
+import passport from 'passport';
+const router = Router();
 
-const commentsController = require('../controllers/comments_controller');
+import { create, destroy } from '../controllers/comments_controller.js';
 
-router.post('/create',passport.checkAuthentication,commentsController.create);
-router.get('/destroy/:id',passport.checkAuthentication,commentsController.destroy);
+router.post('/create',passport.checkAuthentication,create);
+router.get('/destroy/:id',passport.checkAuthentication,destroy);
 
-module.exports = router;
+export default router;

@@ -1,11 +1,17 @@
-const fs = require('fs');
-const path = require('path');
-const rfs = require('rotating-file-stream');
+import fs from 'fs';
+import { join } from 'path';
+import { createStream } from 'rotating-file-stream';
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
-const logDirectory = path.join(__dirname,'../production_logs');
+const logDirectory = join(__dirname,'../production_logs');
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
-const accessLogStream = rfs.createStream('access.log',{
+const accessLogStream = createStream('access.log',{
     interval : '1d',
     path : logDirectory 
 });   
@@ -60,5 +66,5 @@ const production = {
         options : {stream : accessLogStream}
     }
 }
-//module.exports = development;
-module.exports = eval(process.env.CODEIAL_ENVIRONMENT)==undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);
+export default development;
+//export default eval(process.env.CODEIAL_ENVIRONMENT)==undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);

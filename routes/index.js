@@ -1,17 +1,27 @@
-const express = require('express');
+import { Router } from 'express';
 
  
-const router = express.Router();
+const router = Router();
 
-const homeController = require('../controllers/home_controller');
-router.get('/',homeController.home);
+import { home } from '../controllers/home_controller.js';
+router.get('/',home);
 
-router.use('/users',require('./users'));
-router.use('/posts',require('./posts'));
-router.use('/comments',require('./comments'));
-router.use('/api',require('./api'));
-router.use('/likes',require('./likes'));
-router.use('/friends',require('./friends'));
-router.use('/passwordreset',require('./resetPassword'));
+import usersRouter from './users.js';
+import postsRouter from './posts.js';
+import CommentsRouter from './comments.js';
+import apiRouter from './api/index.js';
+import likesRouter from './likes.js';
+import friendsRouter from './friends.js';
+import resetpasswordRouter from './resetPassword.js';
+import chatRouter from './chat.js';
+
+router.use('/chat',chatRouter);
+router.use('/users',usersRouter);
+router.use('/posts',postsRouter);
+router.use('/comments',CommentsRouter);
+router.use('/api',apiRouter);
+router.use('/likes',likesRouter);
+router.use('/friends',friendsRouter);
+router.use('/passwordreset',resetpasswordRouter);
 //console.log("router accessed");
-module.exports=router;  
+export default router;  

@@ -1,5 +1,8 @@
-module.exports.chatSockets = function(socketServer){
-    let io = require('socket.io')(socketServer, {
+import {Server} from 'socket.io';
+import Chat from '../models/chat.js';
+
+export function chatSockets(socketServer){
+    let io = new Server(socketServer, {
         cors: {
           origin: "http://localhost:8000",
           methods: ["GET", "POST"]
@@ -13,17 +16,29 @@ module.exports.chatSockets = function(socketServer){
             console.log("socker disconnected......!");
         });
 
-        socket.on('join_room',function(data){
+        socket.on('join_room',async function(data){
             console.log('joining request',data);
-
+            const messages = await Chat.find().sort({ timestamp: 1 });
+           
+            
             socket.join(data.chatroom);
 
-            io.in(data.chatroom).emit('user_joined',data);
+            io.in(data.chatroom).emit('user_joined',messages);
         });
 
-        socket.on('send_message',function(data){
-            io.in(data.chatroom).emit('receive_message',data);
+        socket.on('send_message', async function(data){
+            //console.log(data);
+            const newMessage = await Chat.create({
+                content : data.message,
+                name : data.user_name,
+                mail : data.user_email
+            });
+            //console.log('hii');
+            //const messages = await Chat.find().sort({ timestamp: 1 });
+            //console.log(messages);
+            io.in(data.chatroom).emit('receive_message',newMessage);
         })
     });
     
 }
+

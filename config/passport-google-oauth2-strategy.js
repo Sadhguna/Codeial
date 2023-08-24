@@ -1,8 +1,8 @@
-const passport = require('passport');
-const googleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const crypto = require('crypto');
-const User = require('../models/user');
-const environment = require('./environment');
+import passport from 'passport';
+import { OAuth2Strategy as googleStrategy } from 'passport-google-oauth';
+import { randomBytes } from 'crypto';
+import User from '../models/user.js';
+import environment from './environment.js';
 
 
 //tell passport to use a new strategy for google login
@@ -24,7 +24,7 @@ passport.use(new googleStrategy({
                 User.create({
                     mail : profile.emails[0].value,
                     name : profile.displayName,
-                    password : crypto.randomBytes(20).toString('hex')
+                    password : randomBytes(20).toString('hex')
                 }).then(()=>{
                     return done(null,user);
                 }).cathch((err)=>{
@@ -38,3 +38,5 @@ passport.use(new googleStrategy({
         });        
     }
 ));
+
+export default passport;

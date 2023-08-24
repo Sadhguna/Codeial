@@ -1,8 +1,8 @@
-const express = require('express');
-const passport = require('passport');
-const router = express.Router();
+import { Router } from 'express';
+import passport from 'passport';
+const router = Router();
 
-const friendsController = require('../controllers/friends_controller');
+import { friends } from '../controllers/friends_controller.js';
 
-router.get('/:id',friendsController.friends);
-module.exports = router;
+router.get('/:id',friends);
+export default router;
