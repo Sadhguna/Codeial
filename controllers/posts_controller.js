@@ -1,4 +1,4 @@
-//const { content } = require('har-validator');
+
 import Post from '../models/posts.js';
 import Comment from '../models/comments.js';
 import Like from '../models/like.js';
@@ -11,7 +11,7 @@ export async function create(req,res){
         });
         
         if(req.xhr){
-           // post = await post.populate('user', 'name').execPopulate();
+
            post = await post.populate('user', 'name');
             return res.status(200).json({
                 data:{
@@ -20,7 +20,7 @@ export async function create(req,res){
                 message : "Post created!"
             })
         }
-       // console.log(post);
+       
         req.flash('success','Post Published');
         return res.redirect('back');
     }catch(err){
@@ -36,7 +36,6 @@ export async function destroy(req,res){
         // .id means converting the object id into string
         // so there is no need to write _id
         if(post.user == req.user.id){
-            //let id = req.params.id;
 
             // delete the associated likes for the post and all its comments likes too
             await Like.deleteMany({likeable : post, onModel : 'Post'});

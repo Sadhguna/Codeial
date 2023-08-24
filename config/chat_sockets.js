@@ -27,15 +27,11 @@ export function chatSockets(socketServer){
         });
 
         socket.on('send_message', async function(data){
-            //console.log(data);
             const newMessage = await Chat.create({
                 content : data.message,
                 name : data.user_name,
                 mail : data.user_email
             });
-            //console.log('hii');
-            //const messages = await Chat.find().sort({ timestamp: 1 });
-            //console.log(messages);
             io.in(data.chatroom).emit('receive_message',newMessage);
         })
     });

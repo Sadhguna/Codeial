@@ -12,17 +12,14 @@ export function resetPasswordMail(req,res){
 }
 
 export function resetPassword(req,res){
-    //console.log(req.body.mail);
     req.flash('success', 'Mail is sent!');
     User.findOne({mail : req.body.mail}).then((data)=>{
-        //console.log(data);
 
         PasswordSchema.create({
             user : data._id,
             token : crypto.randomBytes(20).toString('hex')
         }).then((data)=>{
             passwordResetMailer.newPassword(data);
-            //console.log(data);
             return;
         }).catch((err)=>{
             console.log("error",err);
@@ -48,7 +45,7 @@ export function passwordReset(req,res){
         return  res.redirect('back');
         
     }
-    //console.log('hii');
+   
     PasswordSchema.findOne({token : req.params.token}).then((data)=>{
         console.log(data);
         if(data.valid){
@@ -58,7 +55,6 @@ export function passwordReset(req,res){
                 return;}).catch((err)=>{
                     console.log("error1",err);
                 });
-           // User.findOneAndUpdate({_id : data.id},{password : req.body.password})
             PasswordSchema.findOneAndUpdate({token : req.params.token},{valid : false}).then((data)=>{
                 console.log(data);
                 return;

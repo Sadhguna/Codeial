@@ -7,7 +7,7 @@ export async function toggleLike(req, res){
     try{
 
         // likes/toggle/?id=abcdef&type=Post
-        //console.log("hiiiiiiii");
+       
         let likeable;
         let deleted = false;
 

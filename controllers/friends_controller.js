@@ -11,7 +11,6 @@ export async function friends(req, res){
     
     let user1 = await User.findById(req.user.id);
     let user2 = await User.findById(req.params.id);
-    //console.log(friend);
     if(fr1 && fr2){       
         friend1 = await Friends.deleteOne(fr1);
         friend2 = await Friends.deleteOne(fr2);
@@ -36,6 +35,6 @@ export async function friends(req, res){
         user2.save();
         req.flash('success','Added to friends list');
     }
-    //console.log(fr);
+
     res.redirect('back');
 }

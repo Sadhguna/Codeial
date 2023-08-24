@@ -3,8 +3,6 @@ import nodeMailer from '../config/nodemailer.js';
 
 // this is another way of exporting a method
 export default function newComment(comment) {
-    //console.log("inside newComment mailer");
-
     let htmlString = nodeMailer.renderTemplate({comment : comment},'comments/new_comment.ejs');
     console.log(comment.user.mail);
     nodeMailer.transporter.sendMail({
