@@ -13,9 +13,8 @@ import apiRouter from './api/index.js';
 import likesRouter from './likes.js';
 import friendsRouter from './friends.js';
 import resetpasswordRouter from './resetPassword.js';
-import chatRouter from './chat.js';
 
-router.use('/chat',chatRouter);
+
 router.use('/users',usersRouter);
 router.use('/posts',postsRouter);
 router.use('/comments',CommentsRouter);

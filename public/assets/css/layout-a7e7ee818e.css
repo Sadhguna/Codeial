@@ -3,8 +3,8 @@ body {
   body #layout-main {
     height: 100%;
     width: 50%;
-    padding: 20px; }
+    padding: 50px; }
   body #footer {
-    position: absolute;
-    bottom: 0px;
+    position: fixed;
+    bottom: 0vw;
     width: 100%; }

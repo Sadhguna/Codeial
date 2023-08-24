@@ -29,7 +29,7 @@ class ChatEngine{
 
             self.socket.on('user_joined', function(data){
                 data.forEach((message)=>{
-                    console.log('message');
+                    //console.log('message');
                     let newMessage = $('<li>');
     
                     let messageType = 'other-message';
@@ -41,7 +41,7 @@ class ChatEngine{
                     newMessage.append($('<span>', {
                         'html': message.content
                     }));
-                    newMessage.append($('<br>'))
+                    newMessage.append($('<br>'));
                     newMessage.append($('<sub>', {
                         'html': message.name
                     }));
@@ -51,7 +51,7 @@ class ChatEngine{
                     $('#chat-messages-list').append(newMessage);
                     scrollToBottom();
                 });
-                console.log('a user joined!', data);
+                //console.log('a user joined!', data);
             })
 
 
@@ -86,6 +86,7 @@ class ChatEngine{
                 newMessage.append($('<span>', {
                     'html': message.content
                 }));
+                newMessage.append($('<br>'));
     
                 newMessage.append($('<sub>', {
                     'html': message.name

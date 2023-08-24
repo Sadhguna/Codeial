@@ -66,5 +66,5 @@ const production = {
         options : {stream : accessLogStream}
     }
 }
-export default development;
-//export default eval(process.env.CODEIAL_ENVIRONMENT)==undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);
+//export default development;
+export default eval(process.env.CODEIAL_ENVIRONMENT)==undefined ? development : eval(process.env.CODEIAL_ENVIRONMENT);

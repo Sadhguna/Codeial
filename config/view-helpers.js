@@ -1,7 +1,6 @@
 
 import environment from './environment.js';
 import { readFileSync } from 'fs';
-import { join } from 'path';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -13,6 +12,6 @@ export default (app)=>{
         if(environment.name == 'development'){
             return filePath;
         }
-        return '/'+JSON.parse(readFileSync(join(__dirname,'../public/assets/rev-manifest.json')))[filePath];
+        return '/'+JSON.parse(readFileSync(path.join(__dirname,'../public/assets/rev-manifest.json')))[filePath];
     }
 }
