@@ -27,7 +27,7 @@ import MongoStore from 'connect-mongo';
 
 import { join } from 'path';
 
-import sassMiddleware from 'node-sass-middleware';
+//import sassMiddleware from 'node-sass-middleware';
 
 if(environment.name=='development'){
 app.use(sassMiddleware({ 
