@@ -4,7 +4,7 @@ import Chat from '../models/chat.js';
 export function chatSockets(socketServer){
     let io = new Server(socketServer, {
         cors: {
-          origin: "http://3.110.193.3:8000",
+          origin: "http://13.234.18.97:8000",
           methods: ["GET", "POST"]
         }
       });
