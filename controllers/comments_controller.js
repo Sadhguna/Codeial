@@ -1,6 +1,6 @@
 import Comment from '../models/comments.js';
 import Post from '../models/posts.js';
-import commentsMailer from '../mailers/comments_mailer.js';
+import {newComment} from '../mailers/comments_mailer.js';
 import commentEmailWorker from '../workers/comment_email_workers.js';
 import queue from '../config/kue.js';
 import Like from '../models/like.js';
@@ -18,7 +18,7 @@ export async function create(req,res){
 
 
     comment = await comment.populate('user', 'name mail');
-    commentsMailer.newComment(comment);
+    newComment(comment);
     if (req.xhr){
         // Similar for comments to fetch the user's id!
 
