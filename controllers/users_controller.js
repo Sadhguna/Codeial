@@ -53,7 +53,7 @@ export function signUp(req,res){
         return res.redirect('profile');
     }
     return res.render('user_sign_up',{
-        title : "Codeial | Sign Up"
+        title : "Chatting Engine | Sign Up"
     })
 }
 
@@ -62,7 +62,7 @@ export function signIn(req,res){
         return res.redirect('profile');
     }
     return res.render('user_sign_in',{
-        title : "Codeial | Sign In"
+        title : "Chatting Engine | Sign In"
     })
 }
 
