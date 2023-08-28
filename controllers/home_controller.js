@@ -22,7 +22,7 @@ export async function home(req,res){
 
     let users = await User.find({}).populate({ path : 'friendships', populate : { path : 'to_user'}});
         return res.render('home',{
-            title : 'Pavan Chatting Engine',
+            title : 'Pavan',
             posts : posts,
             all_users : users
     });
